@@ -7,7 +7,7 @@ public class PortalTeleporter : MonoBehaviour
     public Transform player;
     public Transform reciever;
     private bool playerOverlap = false;
-    
+
     void LateUpdate()
     {
         if (playerOverlap)
@@ -43,3 +43,4 @@ public class PortalTeleporter : MonoBehaviour
         }
     }
 }
+
