@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PortalTeleporter : MonoBehaviour
@@ -8,39 +6,38 @@ public class PortalTeleporter : MonoBehaviour
     public Transform reciever;
     private bool playerOverlap = false;
 
-    void LateUpdate()
+    private void FixedUpdate()
     {
         if (playerOverlap)
         {
-            Vector3 portalToPlayer = player.position - transform.position;
-            float dotProduct = Vector3.Dot(transform.up, portalToPlayer);
+            // Calculate the teleportation offset
+            Vector3 positionOffset = reciever.position - transform.position;
 
-            if (dotProduct < 0f)
-            {
-                float rotationDiff = -Quaternion.Angle(transform.rotation, reciever.rotation);
-                rotationDiff += 180;
-                player.Rotate(Vector3.up, rotationDiff);
-                Vector3 positionOffSet = Quaternion.Euler(0f, rotationDiff, 0f) * portalToPlayer;
-                player.position = reciever.position + positionOffSet;
-                playerOverlap = false;
-            }
+            // Teleport the player
+            player.position = player.position + positionOffset;
 
+            Debug.Log("Teleported Player to: " + player.position);
+
+            playerOverlap = false; // Reset overlap flag
         }
     }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
+            Debug.Log("Player entered teleporter trigger zone");
             playerOverlap = true;
-
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
-            playerOverlap = false;
+            Debug.Log("Player exited teleporter trigger zone");
+            // You can choose whether to reset the playerOverlap flag on exit or leave it as is
+            // playerOverlap = false;
         }
     }
 }
-
