@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 moveDirection;
     Rigidbody rb;
 
+    
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -33,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        Application.targetFrameRate = 144;
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
         MyInput();
         speedCont();
