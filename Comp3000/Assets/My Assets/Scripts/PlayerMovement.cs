@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed;
     public float groundDrag;
+    
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -24,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     float verticalInput;
     Vector3 moveDirection;
     Rigidbody rb;
+    
 
     
     private void Start()
@@ -57,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
     private void MovePlayer()
     {
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-
+       
 
         if (OnSlope() && !exitingSlope)
         {
@@ -70,15 +72,18 @@ public class PlayerMovement : MonoBehaviour
         {
             moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+            
         }
         else if(!grounded)
         {
             moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
             rb.AddForce(moveDirection.normalized * moveSpeed * 4f, ForceMode.Force);
-
+            
         }
         rb.useGravity = !OnSlope();
     }
+
+   
 
     private void speedCont()
     {
